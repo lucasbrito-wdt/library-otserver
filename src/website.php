@@ -67,7 +67,7 @@
       $fileName = implode('_', $fileNameArray);
 
       if (Functions::isValidFolderName($fileName)) {
-        $_config = new ConfigPHP('assets/config/' . $fileName . '.php');
+        $_config = new ConfigPHP('assets/config/'.$fileName.'.php');
         return $_config;
       } else
         new Error_Critic('', __METHOD__ . ' - invalid folder/file name <b>' . htmlspecialchars('assets/config/' . $fileName . '.php') . '</b>');
@@ -133,7 +133,7 @@
 
     public static function loadVocations() {
       $path = self::getWebsiteConfig()->getValue('serverPath');
-      self::$vocations = new Vocations($path . 'data/vocations.xml');
+      self::$vocations = new Vocations($path . 'data/XML/vocations.xml');
     }
 
     public static function getVocations() {
@@ -152,7 +152,7 @@
 
     public static function loadGroups() {
       $path = self::getWebsiteConfig()->getValue('serverPath');
-      self::$groups = new Groups($path . 'data/groups.xml');
+      self::$groups = new Groups($path . 'data/XML/groups.xml');
     }
 
     public static function getGroups() {

@@ -167,7 +167,7 @@
       //echo'<br />' . $statement . '<br />';
       if ($this->isConnected() || $this->connect()) {
         $ret = parent::query($statement);
-        if ($this->printQueries) {
+        if ($this->printQueries == false) {
           $_errorInfo = $this->errorInfo();
           echo '<table>';
           echo '<tr><td>Query: </td><td>' . $statement . '</td></tr>';

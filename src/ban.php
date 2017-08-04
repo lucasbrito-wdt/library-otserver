@@ -13,8 +13,8 @@
     const PLAYERBAN_BANISHMENT = 3;
 
     public static $table = 'bans';
-    public $data = array('type' => null, 'value' => null, 'param' => null, 'active' => null, 'expires' => null, 'added' => null, 'admin_id' => null, 'comment' => null);
-    public static $fields = array('id', 'type', 'value', 'param', 'active', 'expires', 'added', 'admin_id', 'comment');
+    public $data = array('type' => null, 'value' => null, 'param' => null, 'active' => null, 'expires' => null, 'added' => null, 'admin_id' => null, 'comment' => null, 'reason' => 0, 'action' => 0, 'statement' => null);
+    public static $fields = array('id', 'type', 'value', 'param', 'active', 'expires', 'added', 'admin_id', 'comment', 'reason', 'action', 'statement');
 
     public function __construct($search_text = null) {
       if ($search_text != null)
@@ -120,6 +120,17 @@
     public function getComment() {
       return $this->data['comment'];
     }
+    
+    public function getReason() {
+      return $this->data['reason'];
+    }
 
+    public function getAction() {
+      return $this->data['action'];
+    }
+
+    public function getStatement() {
+      return $this->data['statement'];
+    }
   }
   

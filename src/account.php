@@ -7,8 +7,8 @@
     const LOADTYPE_MAIL = 'email';
 
     public static $table = 'accounts';
-    public $data = array('name' => null, 'password' => null, 'email' => null, 'premend' => 0, 'blocked' => 0, 'warnings' => 0, 'key' => null, 'email_new' => null, 'email_new_time' => 0, 'rlname' => null, 'location' => null, 'page_access' => 0, 'email_code' => null, 'next_email' => 0, 'premium_points' => 0, 'create_date' => 0, 'create_ip' => 0, 'last_post' => 0, 'flag' => 0);
-    public static $fields = array('id', 'name', 'password', 'email', 'premend', 'blocked', 'warnings', 'key', 'email_new', 'email_new_time', 'rlname', 'location', 'page_access', 'email_code', 'next_email', 'premium_points', 'create_date', 'create_ip', 'last_post', 'flag');
+    public $data = array('name' => null, 'password' => null, 'premdays' => 0, 'lastday' => 0, 'email' => null, 'key' => null, 'blocked' => 0, 'warnings' => 0, 'group_id' => 1, 'page_lastday' => null, 'email_new' => null, 'email_new_time' => 0, 'rlname' => null, 'location' => null, 'page_access' => 0, 'email_code' => null, 'next_email' => 0, 'premium_points' => 0, 'last_post' => 0, 'flag' => 0);
+    public static $fields = array('id',  'name',  'password', 'premdays', 'lastday', 'email', 'key', 'blocked', 'warnings', 'group_id', 'page_lastday', 'email_new', 'email_new_time', 'rlname', 'location', 'page_access', 'email_code', 'next_email', 'premium_points', 'last_post', 'flag');
     public $players;
     public $playerRanks;
     public $guildAccess;
@@ -124,6 +124,7 @@
 
     public function loadBans($forceReload = false) {
       if (!isset($this->bans) || $forceReload) {
+        $this->setClass('Ban');
         $this->bans = new DatabaseList('Ban');
         $filterType = new SQL_Filter(new SQL_Field('type'), SQL_Filter::EQUAL, Ban::TYPE_ACCOUNT);
         $filterValue = new SQL_Filter(new SQL_Field('value'), SQL_Filter::EQUAL, $this->data['id']);
@@ -230,29 +231,11 @@
 
     /*
      * Custom AAC fields
-     * create_ip , INT, default 0
-     * create_date , INT, default 0
      * premium_points , INT, default 0
      * page_access, INT, default 0
      * location, VARCHAR(255), default ''
      * rlname, VARCHAR(255), default ''
      */
-
-    public function setCreateIP($value) {
-      $this->data['create_ip'] = $value;
-    }
-
-    public function getCreateIP() {
-      return $this->data['create_ip'];
-    }
-
-    public function setCreateDate($value) {
-      $this->data['create_date'] = $value;
-    }
-
-    public function getCreateDate() {
-      return $this->data['create_date'];
-    }
 
     public function setPremiumPoints($value) {
       $this->data['premium_points'] = $value;

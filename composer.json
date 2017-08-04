@@ -17,6 +17,7 @@
     "classmap": [
       "src/account.php",
       "src/accountguildrank.php",
+      "src/ban.php",
       "src/configlua.php",
       "src/configphp.php",
       "src/database.php",

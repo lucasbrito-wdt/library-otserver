@@ -1,5 +1,5 @@
 <?php
-  class ConfigLUA extends Errors // NOT SAFE CLASS, LUA CONFIG CAN BE EXECUTED AS PHP CODE {
+  class ConfigLUA extends Errors{
 
     private $config;
 
