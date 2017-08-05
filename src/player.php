@@ -701,6 +701,10 @@
     public function getLookAddons() {
       return $this->data['lookaddons'];
     }
+    
+    public function getCreateDate(){
+      return $this->data['created'];
+    }
 
     /*
      * Custom AAC fields

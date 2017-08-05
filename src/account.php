@@ -7,8 +7,8 @@
     const LOADTYPE_MAIL = 'email';
 
     public static $table = 'accounts';
-    public $data = array('name' => null, 'password' => null, 'premdays' => 0, 'lastday' => 0, 'email' => null, 'key' => null, 'blocked' => 0, 'warnings' => 0, 'group_id' => 1, 'page_lastday' => null, 'email_new' => null, 'email_new_time' => 0, 'rlname' => null, 'location' => null, 'page_access' => 0, 'email_code' => null, 'next_email' => 0, 'premium_points' => 0, 'last_post' => 0, 'flag' => 0);
-    public static $fields = array('id',  'name',  'password', 'premdays', 'lastday', 'email', 'key', 'blocked', 'warnings', 'group_id', 'page_lastday', 'email_new', 'email_new_time', 'rlname', 'location', 'page_access', 'email_code', 'next_email', 'premium_points', 'last_post', 'flag');
+    public $data = array('name' => null, 'password' => null, 'premdays' => 0, 'lastday' => 0, 'email' => null, 'key' => null, 'blocked' => 0, 'warnings' => 0, 'group_id' => 1, 'page_lastday' => null, 'email_new' => null, 'email_new_time' => 0, 'created' => 0, 'rlname' => null, 'location' => null, 'page_access' => 0, 'email_code' => null, 'next_email' => 0, 'premium_points' => 0, 'last_post' => 0, 'flag' => 0);
+    public static $fields = array('id',  'name',  'password', 'premdays', 'lastday', 'email', 'key', 'blocked', 'warnings', 'group_id', 'page_lastday', 'email_new', 'email_new_time', 'created', 'rlname', 'location', 'page_access', 'email_code', 'next_email', 'premium_points', 'last_post', 'flag');
     public $players;
     public $playerRanks;
     public $guildAccess;
@@ -124,7 +124,6 @@
 
     public function loadBans($forceReload = false) {
       if (!isset($this->bans) || $forceReload) {
-        $this->setClass('Ban');
         $this->bans = new DatabaseList('Ban');
         $filterType = new SQL_Filter(new SQL_Field('type'), SQL_Filter::EQUAL, Ban::TYPE_ACCOUNT);
         $filterValue = new SQL_Filter(new SQL_Field('value'), SQL_Filter::EQUAL, $this->data['id']);
@@ -190,11 +189,11 @@
     }
 
     public function setPremDays($value) {
-      $this->data['premend'] = $value;
+      $this->data['premdays'] = $value;
     }
 
     public function getPremDays() {
-      return $this->data['premend'] - (date("z", time()) + (365 * (date("Y", time()) - date("Y", $this->data['lastday']))) - date("z", $this->data['lastday']));
+      return $this->data['premdays'] - (date("z", time()) + (365 * (date("Y", time()) - date("Y", $this->data['lastday']))) - date("z", $this->data['lastday']));
     }
 
     public function setLastDay($value) {
@@ -236,6 +235,10 @@
      * location, VARCHAR(255), default ''
      * rlname, VARCHAR(255), default ''
      */
+
+    public function getCreateDate(){
+     return $this->data['created']; 
+    }
 
     public function setPremiumPoints($value) {
       $this->data['premium_points'] = $value;

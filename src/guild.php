@@ -10,8 +10,8 @@
     const LEVEL_OWNER = 4;
 
     public static $table = 'guilds';
-    public $data = array('name' => null, 'owner_id' => null, 'creationdate' => null, 'description' => null, 'guild_logo' => null, 'create_ip' => 0, 'balance' => 0, 'world_id' => 0, 'motd' => null);
-    public static $fields = array('id', 'name', 'owner_id', 'creationdate', 'description', 'guild_logo', 'create_ip', 'balance', 'world_id', 'motd');
+    public $data = array('world_id' => 0, 'name' => null, 'ownerid' => null, 'creationdate' => null, 'motd' => null, 'balance' => null, 'description' => null, 'logo_gfx_name' => null, 'invited_to' => null, 'invited_by' => null, 'in_war_with' => 0, 'kills' => null, 'show' => null, 'war_time' => null);
+    public static $fields = array('id', 'world_id', 'name', 'ownerid', 'creationdata', 'motd', 'balance', 'description', 'logo_gfx_name', 'invited_to', 'invited_by', 'in_war_with', 'kills', 'show', 'war_time');
     public $invitedPlayers;
     public $ranks;
     public $owner;
