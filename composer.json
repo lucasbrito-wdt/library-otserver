@@ -2,7 +2,7 @@
   "name": "luquinhasbrito/library-otserver",
   "description": "Classes Complementares do POT Class",
   "type": "library",
-  "license": "1.1",
+  "license": "MIT,
   "authors": [
     {
       "name": "Web Design Technologies",
