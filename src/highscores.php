@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class Highscores extends DatabaseList {
 
@@ -124,10 +125,10 @@
       $this->setClass("Highscore");
       $this->addOrder(new SQL_Order(new SQL_Field("resets"), SQL_Order::DESC));
       $filter = new SQL_Filter(new SQL_Field("world_id", "players"), SQL_Filter::EQUAL, $this->worldId);
-      
+
       if($this->vocation != '')
         $filter = new SQL_Field ($filter, SQL_Filter::CRITERIUM_AND, new SQL_Filter(new SQL_Field('vocation', 'platers'), SQL_Filter::EQUAL, $this->vocation));
-      
+
       if ($this->highscoreConfig->isSetKey('groups_hidden'))
         foreach ($this->highscoreConfig->getValue('groups_hidden') as $_group_filter)
           $filter = new SQL_Filter($filter, SQL_Filter::CRITERIUM_AND, new SQL_Filter(new SQL_Field('group_id', 'players'), SQL_Filter::NOT_EQUAL, $_group_filter));

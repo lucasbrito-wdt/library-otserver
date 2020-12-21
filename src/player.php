@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class Player extends ObjectData {
 
@@ -373,7 +374,7 @@
     public function getResets() {
       return $this->data['resets'];
     }
-    
+
     public function setExperience($value) {
       $this->data['experience'] = $value;
     }
@@ -701,7 +702,7 @@
     public function getLookAddons() {
       return $this->data['lookaddons'];
     }
-    
+
     public function getCreateDate(){
       return $this->data['created'];
     }
@@ -788,4 +789,4 @@
       $this->loadByName($name);
     }
 
-  }  
+  }

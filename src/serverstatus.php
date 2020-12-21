@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class ServerStatus {
 
@@ -234,4 +235,3 @@
     }
 
   }
-  

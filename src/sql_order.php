@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class SQL_Order {
 
@@ -27,4 +28,3 @@
     }
 
   }
-  

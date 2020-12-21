@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class ConfigPHP extends Errors {
 
@@ -103,4 +104,3 @@
     }
 
   }
-  

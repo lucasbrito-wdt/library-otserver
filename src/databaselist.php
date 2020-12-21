@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class DatabaseList extends DatabaseHandler implements Iterator, Countable {
 
@@ -154,4 +155,3 @@
     }
 
   }
-  

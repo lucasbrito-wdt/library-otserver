@@ -1,4 +1,6 @@
 <?php
+  namespace Otserver;
+
   class ItemsList extends DatabaseList {
 
     private $player_id = 0;
@@ -91,4 +93,3 @@
     }
 
   }
-  

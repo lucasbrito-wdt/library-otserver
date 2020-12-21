@@ -1,4 +1,6 @@
 <?php
+  namespace Otserver;
+
   class ConfigLUA extends Errors{
 
     private $config;
@@ -66,4 +68,3 @@
     }
 
   }
-  

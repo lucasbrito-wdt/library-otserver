@@ -1,4 +1,6 @@
 <?php
+  namespace Otserver;
+
   class Vocation {
 
     private $data;
@@ -28,4 +30,3 @@
     }
 
   }
-  

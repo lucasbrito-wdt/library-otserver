@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
 // special class to load ranks of X account by one query
   class AccountGuildRank extends GuildRank {
@@ -19,4 +20,3 @@
     }
 
   }
-  

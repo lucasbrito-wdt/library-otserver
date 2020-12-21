@@ -1,4 +1,6 @@
 <?php
+  namespace Otserver;
+  use \PDO;
 
   class Database extends PDO {
 
@@ -207,4 +209,3 @@
     }
 
   }
-  

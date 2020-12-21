@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class Functions {
 
@@ -83,4 +84,3 @@
     }
 
   }
-  

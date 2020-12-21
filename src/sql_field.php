@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class SQL_Field {
 
@@ -43,4 +44,3 @@
     }
 
   }
-  

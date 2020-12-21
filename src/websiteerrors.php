@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class WebsiteErrors {
 
@@ -69,4 +70,3 @@
     }
 
   }
-  

@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class DatabaseHandler {
 
@@ -16,4 +17,3 @@
     }
 
   }
-  

@@ -1,4 +1,6 @@
 <?php
+  namespace Otserver;
+
   class Database_PgSQL extends Database {
 
     public function __construct() {
@@ -31,4 +33,3 @@
     }
 
   }
-  

@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class Account extends ObjectData {
 
@@ -237,7 +238,7 @@
      */
 
     public function getCreateDate(){
-     return $this->data['created']; 
+     return $this->data['created'];
     }
 
     public function setPremiumPoints($value) {
@@ -329,4 +330,3 @@
     }
 
   }
-  

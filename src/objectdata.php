@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class ObjectData extends DatabaseHandler {
 
@@ -59,4 +60,3 @@
     }
 
   }
-  

@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class SQL_Filter {
 
@@ -65,4 +66,3 @@
     }
 
   }
-  

@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class Groups implements Iterator, Countable {
 
@@ -61,4 +62,3 @@
     }
 
   }
-  

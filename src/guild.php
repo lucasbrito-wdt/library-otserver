@@ -1,4 +1,6 @@
 <?php
+  namespace Otserver;
+
   class Guild extends ObjectData {
 
     const LOADTYPE_ID = 'id';
@@ -286,4 +288,3 @@
     }
 
   }
-  

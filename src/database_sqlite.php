@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class Database_SQLite extends Database {
 
@@ -32,4 +33,3 @@
     }
 
   }
-  

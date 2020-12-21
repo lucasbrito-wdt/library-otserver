@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class PlayerNamelocks extends ObjectData {
 
@@ -51,4 +52,3 @@
     }
 
   }
-  

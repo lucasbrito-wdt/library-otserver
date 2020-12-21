@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class Ban extends ObjectData {
 
@@ -120,7 +121,7 @@
     public function getComment() {
       return $this->data['comment'];
     }
-    
+
     public function getReason() {
       return $this->data['reason'];
     }
@@ -133,4 +134,3 @@
       return $this->data['statement'];
     }
   }
-  

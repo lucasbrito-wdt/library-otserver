@@ -1,4 +1,6 @@
 <?php
+  namespace Otserver;
+
   class Highscore extends Player {
     public function getScore() {
       return $this->data['value'];
@@ -8,4 +10,3 @@
       return $this->data['flag'];
     }
   }
-  

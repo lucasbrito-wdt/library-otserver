@@ -1,4 +1,6 @@
 <?php
+  namespace Otserver;
+
   class Error {
 
     private $errorId = '';
@@ -27,4 +29,3 @@
     }
 
   }
-  

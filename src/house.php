@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class House extends ObjectData {
 
@@ -112,4 +113,3 @@
     }
 
   }
-  

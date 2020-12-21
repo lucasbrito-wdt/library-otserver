@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class ItemAttributes {
 
@@ -70,4 +71,3 @@
     }
 
   }
-  

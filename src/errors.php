@@ -1,4 +1,6 @@
 <?php
+  namespace Otserver;
+
   class Errors {
 
     const TYPE_BOTH = 0; // parameter for some functions to return 'errors and notices'
@@ -64,4 +66,3 @@
     }
 
   }
-  

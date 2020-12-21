@@ -1,4 +1,6 @@
 <?php
+  namespace Otserver;
+
   class Group {
 
     private $data;
@@ -16,4 +18,3 @@
     }
 
   }
-  

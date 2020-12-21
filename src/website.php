@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class Website extends WebsiteErrors {
 
@@ -39,27 +40,24 @@
 
     public static function loadWebsiteConfig() {
       self::$websiteConfig = new ConfigPHP();
-      global $config;
-      self::$websiteConfig->setConfig($config['site']);
+      self::$websiteConfig->setConfig($GLOBALS['config']['site']);
     }
 
     public static function getWebsiteConfig() {
       if (!isset(self::$websiteConfig))
         self::loadWebsiteConfig();
-
       return self::$websiteConfig;
     }
 
     public static function loadServerConfig() {
       self::$serverConfig = new ConfigPHP();
       global $config;
-      self::$serverConfig->setConfig($config['server']);
+      self::$serverConfig->setConfig($GLOBALS['config']['server']);
     }
 
     public static function getServerConfig() {
       if (!isset(self::$serverConfig))
         self::loadServerConfig();
-
       return self::$serverConfig;
     }
 
@@ -67,7 +65,7 @@
       $fileName = implode('_', $fileNameArray);
 
       if (Functions::isValidFolderName($fileName)) {
-        $_config = new ConfigPHP('assets/config/'.$fileName.'.php');
+        $_config = new ConfigPHP('config/'.$fileName.'.php');
         return $_config;
       } else
         new Error_Critic('', __METHOD__ . ' - invalid folder/file name <b>' . htmlspecialchars('assets/config/' . $fileName . '.php') . '</b>');
@@ -198,6 +196,4 @@
       }
       return $lastCountryCode;
     }
-
   }
-  

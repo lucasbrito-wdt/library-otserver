@@ -1,4 +1,6 @@
 <?php
+  namespace Otserver;
+
   class Visitor {
 
     const LOGINSTATE_NOT_TRIED = 1;
@@ -75,4 +77,3 @@
     }
 
   }
-  

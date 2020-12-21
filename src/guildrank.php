@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class GuildRank extends ObjectData {
 
@@ -129,4 +130,3 @@
     }
 
   }
-  

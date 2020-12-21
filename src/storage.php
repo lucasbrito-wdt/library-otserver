@@ -1,4 +1,6 @@
 <?php
+  namespace Otserver;
+
   class PlayerStorage extends ObjectData {
 
     // for DatabaseList and to read key of X player, to edit player storage use function of class Player
@@ -36,4 +38,3 @@
     }
 
   }
-  

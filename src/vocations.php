@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class Vocations implements Iterator, Countable {
 
@@ -118,4 +119,3 @@
     }
 
   }
-  

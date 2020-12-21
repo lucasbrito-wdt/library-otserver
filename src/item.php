@@ -1,4 +1,5 @@
 <?php
+  namespace Otserver;
 
   class Item {
 
@@ -103,4 +104,3 @@
     }
 
   }
-  

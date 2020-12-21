@@ -1,4 +1,6 @@
 <?php
+  namespace Otserver;
+  use PDOException;
 
   class Database_MySQL extends Database {
 
@@ -32,4 +34,3 @@
     }
 
   }
-  
