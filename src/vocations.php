@@ -1,6 +1,11 @@
 <?php
   namespace Otserver;
 
+  use \Iterator;
+  use \Countable;
+  use \DOMDocument;
+
+
   class Vocations implements Iterator, Countable {
 
     private $vocations = array();
