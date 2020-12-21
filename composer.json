@@ -10,50 +10,13 @@
     }
   ],
   "require": {
-    "php" : "^5.5 || ^7.0",
+    "php": "^5.5 || ^7.0",
     "luquinhasbrito/pot-class": "@dev"
   },
   "autoload": {
-    "classmap": [
-      "src/account.php",
-      "src/accountguildrank.php",
-      "src/ban.php",
-      "src/configlua.php",
-      "src/configphp.php",
-      "src/database.php",
-      "src/database_mysql.php",
-      "src/database_pgsql.php",
-      "src/database_sqlite.php",
-      "src/databasehandler.php",
-      "src/databaselist.php",
-      "src/error.php",
-      "src/error_critic.php",
-      "src/errors.php",
-      "src/functions.php",
-      "src/group.php",
-      "src/groups.php",
-      "src/guild.php",
-      "src/guildrank.php",
-      "src/highscore.php",
-      "src/highscores.php",
-      "src/house.php",
-      "src/item.php",
-      "src/itemattributes.php",
-      "src/itemslist.php",
-      "src/objectdata.php",
-      "src/player.php",
-      "src/playernamelocks.php",
-      "src/serverstatus.php",
-      "src/sql_field.php",
-      "src/sql_filter.php",
-      "src/sql_order.php",
-      "src/storage.php",
-      "src/visitor.php",
-      "src/vocation.php",
-      "src/vocations.php",
-      "src/website.php",
-      "src/websiteerrors.php"
-    ]
+    "psr-4": {
+      "Otserver\\": "src/"
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true
