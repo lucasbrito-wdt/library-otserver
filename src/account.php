@@ -348,6 +348,16 @@ class Account extends ObjectData
         return $this->data['flag'];
     }
 
+    public function setRecoveryKey($value)
+    {
+        $this->data['key'] = $value;
+    }
+
+    public function getRecoveryKey()
+    {
+        return $this->data['key'];
+    }
+
     /*
      * for compability with old scripts
      */

@@ -9,7 +9,7 @@ class Player extends ObjectData
     const LOADTYPE_ACCOUNT_ID = 'account_id';
 
     public static $table = 'players';
-    public $data = array('name' => null, 'account_id' => null, 'group_id' => null, 'sex' => null, 'vocation' => null, 'experience' => null, 'level' => null, 'maglevel' => null, 'health' => null, 'healthmax' => null, 'mana' => null, 'manamax' => null, 'manaspent' => null, 'soul' => null, 'direction' => null, 'lookbody' => null, 'lookfeet' => null, 'lookhead' => null, 'looklegs' => null, 'looktype' => null, 'lookaddons' => null, 'posx' => null, 'posy' => null, 'posz' => null, 'cap' => null, 'lastlogin' => null, 'lastlogout' => null, 'lastip' => null, 'save' => null, 'conditions' => null, 'skull_type' => null, 'skull_time' => null, 'loss_experience' => null, 'loss_mana' => null, 'loss_skills' => null, 'loss_items' => null, 'loss_containers' => null, 'town_id' => null, 'balance' => null, 'stamina' => null, 'online' => null, 'rank_id' => null, 'guildnick' => null, 'deleted' => null, 'description' => null, 'hide_char' => null, 'comment' => null, 'world-id' => null);
+    public $data = ['name' => null, 'account_id' => null, 'group_id' => null, 'sex' => null, 'vocation' => null, 'experience' => null, 'level' => null, 'maglevel' => null, 'health' => null, 'healthmax' => null, 'mana' => null, 'manamax' => null, 'manaspent' => null, 'soul' => null, 'direction' => null, 'lookbody' => null, 'lookfeet' => null, 'lookhead' => null, 'looklegs' => null, 'looktype' => null, 'lookaddons' => null, 'posx' => null, 'posy' => null, 'posz' => null, 'cap' => null, 'lastlogin' => null, 'lastlogout' => null, 'lastip' => null, 'save' => null, 'conditions' => null, 'skull_type' => null, 'skull_time' => null, 'loss_experience' => null, 'loss_mana' => null, 'loss_skills' => null, 'loss_items' => null, 'loss_containers' => null, 'town_id' => null, 'balance' => null, 'stamina' => null, 'online' => null, 'rank_id' => null, 'guildnick' => null, 'deleted' => null, 'description' => null, 'hide_char' => null, 'comment' => null, 'world-id' => null];
     public static $fields = array('id', 'name', 'world_id', 'group_id', 'account_id', 'level', 'vocation', 'health', 'healthmax', 'experience', 'lookbody', 'lookfeet', 'lookhead', 'looklegs', 'looktype', 'lookaddons', 'maglevel', 'mana', 'manamax', 'manaspent', 'soul', 'town_id', 'posx', 'posy', 'posz', 'conditions', 'cap', 'sex', 'lastlogin', 'lastip', 'skull', 'skulltime', 'rank_id', 'guildnick', 'lastlogout', 'blessings', 'balance', 'stamina', 'direction', 'loss_experience', 'loss_mana', 'loss_skills', 'loss_containers', 'loss_items', 'premend', 'online', 'marriage', 'promotion', 'deleted', 'description', 'created', 'nick_verify', 'old_name', 'hide_char', 'worldtransfer', 'comment', 'show_outfit', 'show_eq', 'show_bars', 'show_skills', 'show_quests', 'reset', 'resets', 'frags_all', 'skull_type');
     public static $skillFields = array('player_id', 'skillid', 'value', 'count');
     public $items;
@@ -45,6 +45,20 @@ class Player extends ObjectData
     public function loadByName($name)
     {
         $this->load($name, self::LOADTYPE_NAME);
+    }
+
+    public function createdCharacter($Array)
+    {
+        $keys = array();
+        $values = array();
+
+        foreach ($Array as $key => $value) {
+            $keys[] = $this->getDatabaseHandler()->fieldName($key);
+            $values[] = $this->getDatabaseHandler()->quote($value);
+        }
+
+        $this->getDatabaseHandler()->query('INSERT INTO ' . $this->getDatabaseHandler()->tableName(self::$table) . '(' . implode(', ', $keys) . ') VALUES (' . implode(',', $values) . ')');
+        return $this->setID($this->getDatabaseHandler()->lastInsertId());
     }
 
     public function save($forceInsert = false)
@@ -378,6 +392,16 @@ class Player extends ObjectData
     public function getName()
     {
         return $this->data['name'];
+    }
+
+    public function setOldName($value)
+    {
+        $this->data['old_name'] = $value;
+    }
+
+    public function getOldName()
+    {
+        return $this->data['old_name'];
     }
 
     public function setGroupID($value)

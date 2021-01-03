@@ -33,6 +33,8 @@ class Visitor extends Session
 
     public static function setAccountLoaded($account)
     {
+        if (Session::has('accountLogged'))
+            Session::remove('accountLogged');
         Session::put(['accountLogged' => $account]);
     }
 
