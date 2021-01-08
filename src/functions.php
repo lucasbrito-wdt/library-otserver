@@ -24,6 +24,20 @@ class Functions
         return (filter_var($email, FILTER_VALIDATE_EMAIL) != false);
     }
 
+    public static function check_account_name($name)
+    {
+        $name = (string) $name;
+        $temp = strspn("$name", "QWERTYUIOPASDFGHJKLZXCVBNM0123456789");
+        if ($temp != strlen($name))
+            return false;
+        if (strlen($name) < 1)
+            return false;
+        if (strlen($name) > 32)
+            return false;
+
+        return true;
+    }
+
     public static function check_mail($email)
     {
         $email = (string) $email;
@@ -119,5 +133,16 @@ class Functions
             return substr($text, 0, strrpos(substr($text, 0, $length_limit), " ")) . '...';
         else
             return $text;
+    }
+
+    public static function encryptPassword($encryptionType, $password, $account = null)
+    {
+        if (isset($encryptionType))
+            if ($encryptionType == 'plain')
+                return $password;
+            else
+                return hash($encryptionType, $password);
+        else
+            return "You cannot use Website::encryptPassword(\$password) when password encryption is not set.";
     }
 }

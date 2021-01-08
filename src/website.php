@@ -10,6 +10,7 @@ class Website extends WebsiteErrors
     public static $websiteConfig;
     public static $vocations;
     public static $groups;
+    public static $quests;
     public static $SQL;
     public static $passwordsEncryptions = array(
         'plain' => 'plain',
@@ -188,6 +189,20 @@ class Website extends WebsiteErrors
             self::loadGroups();
 
         return self::$groups->getGroupName($id);
+    }
+
+    public static function loadQuests()
+    {
+        $path = self::getWebsiteConfig()->getValue('serverPath');
+        self::$quests = new Quests($path . 'data/XML/quests.xml');
+    }
+
+    public static function getQuests()
+    {
+        if (!isset(self::$quests))
+            self::loadQuests();
+
+        return self::$quests;
     }
 
     public static function getCountryCode($IP)

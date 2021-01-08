@@ -4,7 +4,6 @@ namespace Otserver;
 
 class Highscores extends DatabaseList
 {
-
     const SKILL_FIST = 0;
     const SKILL_CLUB = 1;
     const SKILL_SWORD = 2;

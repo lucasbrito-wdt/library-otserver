@@ -17,6 +17,7 @@ class Player extends ObjectData
     public $skills;
     public $account;
     public $rank;
+    public $deaths;
 
     public function __construct($search_text = null, $search_by = self::LOADTYPE_ID)
     {
@@ -123,6 +124,16 @@ class Player extends ObjectData
             }
         } else
             new Error_Critic('', 'Player::saveStorages() - storages not loaded, cannot save');
+    }
+
+    public function getDeaths()
+    {
+        $this->deaths = new DatabaseList();
+        $this->deaths->setClass('PlayerDeath');
+        $this->deaths->setFilter(new SQL_Filter(new SQL_Filter(new SQL_Field('player_id'), SQL_Filter::EQUAL, $this->getId()), SQL_Filter::CRITERIUM_AND, new SQL_Filter(new SQL_Field('id', 'players'), SQL_Filter::EQUAL, new SQL_Field('player_id', 'player_deaths'))));
+        $this->deaths->addOrder(new SQL_Order(new SQL_Field('time'), SQL_Order::DESC));
+        $this->deaths->setLimit(20);
+        return $this->deaths;
     }
 
     public function getStorage($key)

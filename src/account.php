@@ -10,8 +10,8 @@ class Account extends ObjectData
     const LOADTYPE_MAIL = 'email';
 
     public static $table = 'accounts';
-    public $data = array('name' => null, 'password' => null, 'premdays' => 0, 'lastday' => 0, 'email' => null, 'key' => null, 'blocked' => 0, 'warnings' => 0, 'group_id' => 1, 'page_lastday' => null, 'email_new' => null, 'email_new_time' => 0, 'created' => 0, 'rlname' => null, 'location' => null, 'page_access' => 0, 'email_code' => null, 'next_email' => 0, 'premium_points' => 0, 'last_post' => 0, 'flag' => 0);
-    public static $fields = array('id',  'name',  'password', 'premdays', 'lastday', 'email', 'key', 'blocked', 'warnings', 'group_id', 'page_lastday', 'email_new', 'email_new_time', 'created', 'rlname', 'location', 'page_access', 'email_code', 'next_email', 'premium_points', 'last_post', 'flag');
+    public $data = array('name' => null, 'password' => null, 'premdays' => 0, 'lastday' => 0, 'email' => null, 'key' => null, 'blocked' => 0, 'warnings' => 0, 'group_id' => 1, 'page_lastday' => 1, 'email_new' => null, 'email_new_time' => 0, 'created' => 0, 'rlname' => null, 'location' => null, 'page_access' => 0, 'email_code' => null, 'next_email' => 0, 'premium_points' => 0, 'last_post' => 0, 'flag' => 0, 'created_ip' => null);
+    public static $fields = array('id',  'name',  'password', 'premdays', 'lastday', 'email', 'key', 'blocked', 'warnings', 'group_id', 'page_lastday', 'email_new', 'email_new_time', 'created', 'rlname', 'location', 'page_access', 'email_code', 'next_email', 'premium_points', 'last_post', 'flag', 'created_ip');
     public $players;
     public $playerRanks;
     public $guildAccess;
@@ -285,6 +285,21 @@ class Account extends ObjectData
         return $this->data['group_id'];
     }
 
+    public function setCreateDate()
+    {
+        return $this->data['created'];
+    }
+
+    public function getCreateIP()
+    {
+        return $this->data['created_ip'];
+    }
+
+    public function setCreateIP()
+    {
+        return $this->data['created_ip'];
+    }
+
     /*
      * Custom AAC fields
      * premium_points , INT, default 0
@@ -415,5 +430,20 @@ class Account extends ObjectData
     public function getLastLogin()
     {
         return $this->getLastDay();
+    }
+
+    public function isBlocked()
+    {
+        return $this->data['blocked'] ? 1 : 0;
+    }
+
+    public function unblock()
+    {
+        $this->data['blocked'] = 0;
+    }
+
+    public function block()
+    {
+        $this->data['blocked'] = 1;
     }
 }
