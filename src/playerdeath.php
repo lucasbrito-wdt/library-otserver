@@ -7,9 +7,10 @@ namespace Otserver;
 class PlayerDeath extends ObjectData
 {
     public static $table = 'player_deaths';
-    public $data = array('player_id' => null, 'time' => null, 'level' => null, 'killed_by' => null, 'is_player' => null, 'mostdamage_by' => null, 'mostdamage_is_player' => null, 'unjustified' => null, 'mostdamage_unjustified' => null);
-    public static $fields = array('player_id', 'time', 'level', 'killed_by', 'is_player', 'mostdamage_by', 'mostdamage_is_player', 'unjustified', 'mostdamage_unjustified');
-    public static $extraFields = array(array('id', 'players'), array('name', 'players'));
+    public $data = array('id' => null, 'player_id' => null, 'date' => null, 'level' => null, 'altkilled_by' => null);
+    public static $fields = array('id', 'player_id', 'date', 'level', 'altkilled_by');
+    //public static $extraFields = array(array('id', 'players'), array('name', 'players'));
+    public $killers;
 
     public function __construct($player_id = null)
     {
@@ -20,7 +21,7 @@ class PlayerDeath extends ObjectData
     public function load($player_id)
     {
         $search_string = $this->getDatabaseHandler()->fieldName('player_id') . ' = ' . $this->getDatabaseHandler()->quote($player_id);
-        $fieldsArray = array();
+        $fieldsArray = [];
         foreach (self::$fields as $fieldName)
             $fieldsArray[$fieldName] = $this->getDatabaseHandler()->fieldName($fieldName);
         $this->data = $this->getDatabaseHandler()->query('SELECT ' . implode(', ', $fieldsArray) . ' FROM ' . $this->getDatabaseHandler()->tableName(self::$table) . ' WHERE ' . $search_string)->fetch();
@@ -47,99 +48,33 @@ class PlayerDeath extends ObjectData
         }
     }
 
+    public function loadKillers()
+    {
+        return $this->killers = $this->getDatabaseHandler()->query('SELECT ' . $this->getDatabaseHandler()->tableName('environment_killers') . '.' . $this->getDatabaseHandler()->fieldName('name') . ' AS monster_name, ' . $this->getDatabaseHandler()->tableName('players') . '.' . $this->getDatabaseHandler()->fieldName('name') . ' AS player_name, ' . $this->getDatabaseHandler()->tableName('players') . '.' . $this->getDatabaseHandler()->fieldName('deleted') . ' AS player_exists FROM ' . $this->getDatabaseHandler()->tableName('killers') . ' LEFT JOIN ' . $this->getDatabaseHandler()->tableName('environment_killers') . ' ON ' . $this->getDatabaseHandler()->tableName('killers') . '.' . $this->getDatabaseHandler()->fieldName('id') . ' = ' . $this->getDatabaseHandler()->tableName('environment_killers') . '.' . $this->getDatabaseHandler()->fieldName('kill_id') . ' LEFT JOIN ' . $this->getDatabaseHandler()->tableName('player_killers') . ' ON ' . $this->getDatabaseHandler()->tableName('killers') . '.' . $this->getDatabaseHandler()->fieldName('id') . ' = ' . $this->getDatabaseHandler()->tableName('player_killers') . '.' . $this->getDatabaseHandler()->fieldName('kill_id') . ' LEFT JOIN ' . $this->getDatabaseHandler()->tableName('players') . ' ON ' . $this->getDatabaseHandler()->tableName('players') . '.' . $this->getDatabaseHandler()->fieldName('id') . ' = ' . $this->getDatabaseHandler()->tableName('player_killers') . '.' . $this->getDatabaseHandler()->fieldName('player_id') . '  WHERE ' . $this->getDatabaseHandler()->tableName('killers') . '.' . $this->getDatabaseHandler()->fieldName('death_id') . ' = ' . $this->getDatabaseHandler()->quote($this->data['id']) . ' ORDER BY ' . $this->getDatabaseHandler()->tableName('killers') . '.' . $this->getDatabaseHandler()->fieldName('final_hit') . ' DESC, ' . $this->getDatabaseHandler()->tableName('killers') . '.' . $this->getDatabaseHandler()->fieldName('id') . ' ASC')->fetchAll();
+    }
+
     public function isLoaded()
     {
         return isset($this->data['player_id']);
     }
 
-    public function getKillerString()
+    public function getId()
     {
-        if ($this->data['is_player']) {
-            return '<a href="/characters/' . urlencode($this->data['killed_by']) . '">' . htmlspecialchars($this->data['killed_by']) . '</a>';
-        } else {
-            return htmlspecialchars($this->data['killed_by']);
-        }
+        return $this->data['id'];
     }
 
-    public function getMostDamageString()
-    {
-        if ($this->data['mostdamage_is_player']) {
-            return '<a href="/characters/' . urlencode($this->data['mostdamage_by']) . '">' . htmlspecialchars($this->data['mostdamage_by']) . '</a>';
-        } else {
-            return htmlspecialchars($this->data['mostdamage_by']);
-        }
-    }
-
-    public function setPlayerID($value)
-    {
-        $this->data['player_id'] = $value;
-    }
     public function getPlayerID()
     {
         return $this->data['player_id'];
     }
-    public function setTime($value)
+
+    public function getDate()
     {
-        $this->data['time'] = $value;
+        return $this->data['date'];
     }
-    public function getTime()
-    {
-        return $this->data['time'];
-    }
-    public function setLevel($value)
-    {
-        $this->data['level'] = $value;
-    }
+
     public function getLevel()
     {
         return $this->data['level'];
-    }
-    public function setKilledBy($value)
-    {
-        $this->data['killed_by'] = $value;
-    }
-    public function getKilledBy()
-    {
-        return $this->data['killed_by'];
-    }
-    public function setIsPlayer($value)
-    {
-        $this->data['is_player'] = $value;
-    }
-    public function getIsPlayer()
-    {
-        return $this->data['is_player'];
-    }
-    public function setMostDamageBy($value)
-    {
-        $this->data['mostdamage_by'] = $value;
-    }
-    public function getMostDamageBy()
-    {
-        return $this->data['mostdamage_by'];
-    }
-    public function setMostDamageIsPlayer($value)
-    {
-        $this->data['mostdamage_is_player'] = $value;
-    }
-    public function getMostDamageIsPlayer()
-    {
-        return $this->data['mostdamage_is_player'];
-    }
-    public function setUnjustified($value)
-    {
-        $this->data['unjustified'] = $value;
-    }
-    public function getUnjustified()
-    {
-        return $this->data['unjustified'];
-    }
-    public function setMostDamageUnjustified($value)
-    {
-        $this->data['mostdamage_unjustified'] = $value;
-    }
-    public function getMostDamageUnjustified()
-    {
-        return $this->data['mostdamage_unjustified'];
     }
 }

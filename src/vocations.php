@@ -9,7 +9,7 @@ use \DOMDocument;
 class Vocations implements Iterator, Countable
 {
 
-    private $vocations = array();
+    public $vocations = array();
     private $XML;
     public $iterator = 0;
 
@@ -101,6 +101,11 @@ class Vocations implements Iterator, Countable
         if ($vocs = self::getVocation($id))
             return $vocs->getName();
         return false;
+    }
+
+    public function data()
+    {
+        return $this->vocations;
     }
 
     public function current()

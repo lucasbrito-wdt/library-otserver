@@ -11,6 +11,7 @@ class Website extends WebsiteErrors
     public static $vocations;
     public static $groups;
     public static $quests;
+    public static $spells;
     public static $SQL;
     public static $passwordsEncryptions = array(
         'plain' => 'plain',
@@ -203,6 +204,20 @@ class Website extends WebsiteErrors
             self::loadQuests();
 
         return self::$quests;
+    }
+
+    public static function loadSpells()
+    {
+        $path = self::getWebsiteConfig()->getValue('serverPath');
+        self::$spells = new Spells($path . 'data/spells/spells.xml');
+    }
+
+    public static function getSpells()
+    {
+        if (!isset(self::$spells))
+            self::loadSpells();
+
+        return self::$spells;
     }
 
     public static function getCountryCode($IP)

@@ -131,7 +131,7 @@ class Player extends ObjectData
         $this->deaths = new DatabaseList();
         $this->deaths->setClass('PlayerDeath');
         $this->deaths->setFilter(new SQL_Filter(new SQL_Filter(new SQL_Field('player_id'), SQL_Filter::EQUAL, $this->getId()), SQL_Filter::CRITERIUM_AND, new SQL_Filter(new SQL_Field('id', 'players'), SQL_Filter::EQUAL, new SQL_Field('player_id', 'player_deaths'))));
-        $this->deaths->addOrder(new SQL_Order(new SQL_Field('time'), SQL_Order::DESC));
+        $this->deaths->addOrder(new SQL_Order(new SQL_Field('date'), SQL_Order::DESC));
         $this->deaths->setLimit(20);
         return $this->deaths;
     }
