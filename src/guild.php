@@ -2,9 +2,10 @@
 
 namespace Otserver;
 
+use Illuminate\Support\Facades\Storage;
+
 class Guild extends ObjectData
 {
-
     const LOADTYPE_ID = 'id';
     const LOADTYPE_NAME = 'name';
     const LEVEL_NOT_IN_GUILD = 0;
@@ -17,18 +18,18 @@ class Guild extends ObjectData
     public $data = [
         'world_id' => 0,
         'name' => null,
-        'ownerid' => null,
-        'creationdate' => null,
+        'ownerid' => 0,
+        'creationdata' => 0,
         'motd' => null,
-        'balance' => null,
+        'balance' => 0,
         'description' => null,
         'logo_gfx_name' => 'default_guild_logo.gif',
-        'invited_to' => null,
-        'invited_by' => null,
+        'invited_to' => 0,
+        'invited_by' => 0,
         'in_war_with' => 0,
-        'kills' => null,
-        'show' => null,
-        'war_time' => null
+        'kills' => 0,
+        'show' => 0,
+        'war_time' => 0
     ];
     public static $fields = [
         'id',
@@ -165,7 +166,6 @@ class Guild extends ObjectData
         foreach ($this->getInvitations($forceReload) as $invitedPlayer)
             if ($invitedPlayer->getID() == $playerId)
                 return true;
-
         return false;
     }
 
@@ -197,7 +197,13 @@ class Guild extends ObjectData
 
     public function getGuildLogoLink()
     {
-        return 'guild_image.php?id=' . $this->getID();
+        if ($this->getGuildLogo() == "default_guild_logo.gif")
+            return asset('images/guilds/' . $this->getGuildLogo());
+        else
+            if (Storage::disk('public')->exists('guilds/' . $this->getGuildLogo()))
+            return asset('storage/guilds/' . $this->getGuildLogo());
+        else
+            return asset('images/guilds/' . $this->getGuildLogo());
     }
 
     public function getID()
@@ -232,22 +238,22 @@ class Guild extends ObjectData
 
     public function getOwnerID()
     {
-        return $this->data['owner_id'];
+        return $this->data['ownerid'];
     }
 
     public function setOwnerID($value)
     {
-        $this->data['owner_id'] = $value;
+        $this->data['ownerid'] = $value;
     }
 
     public function getCreationData()
     {
-        return $this->data['creationdate'];
+        return $this->data['creationdata'];
     }
 
     public function setCreationData($value)
     {
-        $this->data['creationdate'] = $value;
+        $this->data['creationdata'] = $value;
     }
 
     public function getMOTD()
@@ -292,9 +298,9 @@ class Guild extends ObjectData
         return $this->data['logo_gfx_name'];
     }
 
-    public function setGuildLogo($mimeType, $fileData)
+    public function setGuildLogo($value)
     {
-        $this->data['logo_gfx_name'] = time() . ';data:' . $mimeType . ';base64,' . base64_encode($fileData);
+        $this->data['logo_gfx_name'] = $value;
     }
 
     /*
@@ -363,5 +369,15 @@ class Guild extends ObjectData
     public function setWorld($value)
     {
         $this->data['world_id'] = $value;
+    }
+
+    public function getShow()
+    {
+        return $this->data['show'];
+    }
+
+    public function setShow($value)
+    {
+        $this->data['show'] = $value;
     }
 }

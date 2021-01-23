@@ -2,6 +2,8 @@
 
 namespace Otserver;
 
+use Validator;
+
 class Functions
 {
 
@@ -64,6 +66,39 @@ class Functions
             return false;
         if (strlen($name) > 25)
             return false;
+
+        return true;
+    }
+
+    public static function check_rank_name($name)
+    {
+        $name = (string) $name;
+        $temp = strspn("$name", "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789-[ ] ");
+        if ($temp != strlen($name))
+            return false;
+        if (strlen($name) < 1)
+            return false;
+        if (strlen($name) > 60)
+            return false;
+
+        return true;
+    }
+
+    public static function check_guild_name($name)
+    {
+        $name = (string) $name;
+        $words_blocked = array('--', "''", "' ", " '", '- ', ' -', "-'", "'-", '  ');
+        $temp = strspn("$name", "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789-' ");
+        if ($temp != strlen($name))
+            return false;
+        if (strlen($name) < 1)
+            return false;
+        if (strlen($name) > 60)
+            return false;
+
+        foreach ($words_blocked as $word)
+            if (!(strpos($name, $word) === false))
+                return false;
 
         return true;
     }

@@ -315,12 +315,12 @@ class Account extends ObjectData
 
     public function setPremiumPoints($value)
     {
-        $this->data['premium_points'] = $value;
+        $this->data['premium_points'] = (int) $value;
     }
 
     public function getPremiumPoints()
     {
-        return $this->data['premium_points'];
+        return (int) $this->data['premium_points'];
     }
 
     public function setPageAccess($value)

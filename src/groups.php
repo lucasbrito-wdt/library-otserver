@@ -7,7 +7,6 @@ use Countable;
 
 class Groups implements Iterator, Countable
 {
-
     private $groups = array();
     public $iterator = 0;
 

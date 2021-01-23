@@ -12,6 +12,7 @@ class Website extends WebsiteErrors
     public static $groups;
     public static $quests;
     public static $spells;
+    public static $stages;
     public static $SQL;
     public static $passwordsEncryptions = array(
         'plain' => 'plain',
@@ -218,6 +219,20 @@ class Website extends WebsiteErrors
             self::loadSpells();
 
         return self::$spells;
+    }
+
+    public static function loadStages()
+    {
+        $path = self::getWebsiteConfig()->getValue('serverPath');
+        self::$stages = new Stages($path . 'data/XML/stages.xml');
+    }
+
+    public static function getStages()
+    {
+        if (!isset(self::$stages))
+            self::loadStages();
+
+        return self::$stages;
     }
 
     public static function getCountryCode($IP)

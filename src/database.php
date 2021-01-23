@@ -203,7 +203,7 @@ class Database extends PDO
         //echo '<br />' . $statement . '<br />';
         if ($this->isConnected() || $this->connect()) {
             $ret = parent::query($statement);
-            if ($this->printQueries == false && $this->errorCode() != "00000") {
+            if ($this->printQueries && $this->errorCode() != "00000") {
                 $_errorInfo = $this->errorInfo();
                 throw new QueryException($this->errorCode(), $statement, $_errorInfo[0], $_errorInfo[1], $_errorInfo[2]);
             }

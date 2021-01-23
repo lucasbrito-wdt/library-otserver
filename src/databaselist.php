@@ -15,6 +15,7 @@ class DatabaseList extends DatabaseHandler implements Iterator, Countable
     public $fields = array();
     public $extraFields = array();
     public $filter;
+    public $substr;
     public $orders = array();
     public $limit;
     public $offset = 0;
@@ -65,8 +66,16 @@ class DatabaseList extends DatabaseHandler implements Iterator, Countable
         if ($this->offset > 0)
             $offset = ' OFFSET ' . (int) $this->offset;
 
-        $query = 'SELECT ' . implode(', ', $fieldsArray) . ' FROM ' . implode(', ', $tables) . $filter . $order . $limit . $offset;
+        $substr = '';
+        if ($this->substr !== null) {
+            if ($this->filter !== null) {
+                $substr = ' AND SUBSTR' . $this->substr;
+            } else {
+                $substr = ' WHERE SUBSTR' . $this->substr;
+            }
+        }
 
+        $query = 'SELECT ' . implode(', ', $fieldsArray) . ' FROM ' . implode(', ', $tables) . $filter . $substr . $order . $limit . $offset;
         $this->data = $this->getDatabaseHandler()->query($query)->fetchAll();
     }
 
@@ -127,6 +136,11 @@ class DatabaseList extends DatabaseHandler implements Iterator, Countable
     public function setOffset($offset)
     {
         $this->offset = $offset;
+    }
+
+    public function setSubstr($substr)
+    {
+        $this->substr = $substr;
     }
 
     public function addTables($tables)
