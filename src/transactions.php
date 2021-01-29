@@ -4,23 +4,68 @@ namespace Otserver;
 
 class Transactions extends ObjectData
 {
-    public static $table = 'z_transactions';
-    public $data = ['account_id' => null, 'name' => null, 'payment_method' => null, 'item_count' => null, 'points' => null, 'reference_code' => null, 'transaction_code' => null, 'status' => null, 'created_at' => null, 'updated_at' => null];
-    public static $fields = ['id', 'account_id', 'name', 'payment_method', 'item_count', 'points', 'reference_code', 'transaction_code', 'status', 'created_at', 'updated_at'];
+    const LOADTYPE_ID = 'id';
+    const LOADTYPE_TRANSACTION_CODE = 'transaction_code';
 
-    public function __construct($search_text = null)
+    public static $table = 'z_transactions';
+    public $data = [
+        'account_id' => null,
+        'account_from' => null,
+        'name' => null,
+        'payment_method' => null,
+        'item_count' => null,
+        'points' => null,
+        'reference_code' => null,
+        'transaction_code' => null,
+        'status' => null,
+        'created_at' => null,
+        'updated_at' => null
+    ];
+    public static $fields = ['id', 'account_id', 'account_from', 'name', 'payment_method', 'item_count', 'points', 'reference_code', 'transaction_code', 'status'];
+
+    public function __construct($search_text = null, $search_by = self::LOADTYPE_ID)
     {
         if ($search_text != null)
-            $this->load($search_text);
+            $this->load($search_text, $search_by);
     }
 
-    public function load($search_text)
+    public function load($search_text, $search_by = self::LOADTYPE_ID)
     {
-        $search_string = $this->getDatabaseHandler()->fieldName('account_id') . ' = ' . $this->getDatabaseHandler()->quote($search_text);
-        $fieldsArray = [];
+        if (in_array($search_by, self::$fields))
+            $search_string = $this->getDatabaseHandler()->fieldName($search_by) . ' = ' . $this->getDatabaseHandler()->quote($search_text);
+        else
+            new Error_Critic('', 'Pesquisa de transações por tipo errada.');
+        $fieldsArray = array();
         foreach (self::$fields as $fieldName)
-            $fieldsArray[$fieldName] = $this->getDatabaseHandler()->fieldName($fieldName);
-        $this->data = $this->getDatabaseHandler()->query('SELECT ' . implode(', ', $fieldsArray) . ' FROM ' . $this->getDatabaseHandler()->tableName(self::$table) . ' WHERE ' . $search_string)->fetch();
+            $fieldsArray[] = $this->getDatabaseHandler()->fieldName($fieldName);
+        return $this->data = $this->getDatabaseHandler()->query('SELECT ' . implode(', ', $fieldsArray) . ' FROM ' . $this->getDatabaseHandler()->tableName(self::$table) . ' WHERE ' . $search_string)->fetch();
+    }
+
+    public function save($forceInsert = false)
+    {
+        if (!isset($this->data['id']) || $forceInsert) {
+            $keys = array();
+            $values = array();
+            foreach (self::$fields as $key)
+                if ($key != 'id') {
+                    $keys[] = $this->getDatabaseHandler()->fieldName($key);
+                    $values[] = $this->getDatabaseHandler()->quote($this->data[$key]);
+                }
+            $this->getDatabaseHandler()->query('INSERT INTO ' . $this->getDatabaseHandler()->tableName(self::$table) . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $values) . ')');
+            $this->setID($this->getDatabaseHandler()->lastInsertId());
+        } else {
+            $updates = array();
+            foreach (self::$fields as $key)
+                if ($key != 'id')
+                    $updates[] = $this->getDatabaseHandler()->fieldName($key) . ' = ' . $this->getDatabaseHandler()->quote($this->data[$key]);
+            $this->getDatabaseHandler()->query('UPDATE ' . $this->getDatabaseHandler()->tableName(self::$table) . ' SET ' . implode(', ', $updates) . ' WHERE ' . $this->getDatabaseHandler()->fieldName('id') . ' = ' . $this->getDatabaseHandler()->quote($this->data['id']));
+        }
+    }
+
+    public function delete()
+    {
+        $this->getDatabaseHandler()->query('DELETE FROM ' . $this->getDatabaseHandler()->tableName(self::$table) . ' WHERE ' . $this->getDatabaseHandler()->fieldName('id') . ' = ' . $this->getDatabaseHandler()->quote($this->data['id']));
+        unset($this->data['id']);
     }
 
     public function getId()
@@ -111,6 +156,16 @@ class Transactions extends ObjectData
     public function setStatus($value)
     {
         $this->data['status'] = $value;
+    }
+
+    public function getAccountFrom()
+    {
+        return $this->data['account_from'];
+    }
+
+    public function setAccountFrom($value)
+    {
+        $this->data['account_from'] = $value;
     }
 
     public function getCreatedAt()
